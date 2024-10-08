@@ -1,0 +1,86 @@
+{% extends 'hookup/base1.html' %}
+
+{% block title %}HuKUP Invite{% endblock %}
+
+{% block content %}
+<div class="invite-container text-center">
+    <h2>Invite Friends</h2>
+    <p>Share this unique link with your friends. Once they sign up and complete their profile, you will earn 30 tokens!
+    </p>
+
+    <div class="referral-link mb-4">
+        <input type="text" value="{{ referral_link }}" id="referralLinkInput" readonly class="form-control">
+        <button class="btn btn-primary mt-2" onclick="copyReferralLink()" data-toggle="tooltip" data-placement="top"
+            title="Copy Referral Link">
+            Copy Link
+        </button>
+    </div>
+
+    <div class="info">
+        <p class="text-muted">This referral link is a great way to help your friends join the platform and earn rewards!
+        </p>
+    </div>
+</div>
+
+<script>
+    function copyReferralLink() {
+        var copyText = document.getElementById("referralLinkInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+
+        // Show tooltip message
+        var tooltipButton = document.querySelector('[data-toggle="tooltip"]');
+        tooltipButton.setAttribute('title', 'Copied!');
+        $(tooltipButton).tooltip('show');
+
+        // Reset tooltip after a short delay
+        setTimeout(function () {
+            tooltipButton.setAttribute('title', 'Copy Referral Link');
+            $(tooltipButton).tooltip('hide');
+        }, 1500);
+    }
+
+    // Initialize tooltip
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+{% endblock %}
+
+<style>
+    .invite-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .referral-link input {
+        width: calc(100% - 120px);
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .referral-link button {
+        display: inline-block;
+        padding: 10px 20px;
+    }
+
+    .info {
+        margin-top: 20px;
+    }
+
+    .info p {
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .text-muted {
+        font-size: 14px;
+        color: #6c757d;
+    }
+</style>

@@ -1,0 +1,49 @@
+{% extends 'hookup/base1.html' %}
+
+{% block title %}HuKUP Messages{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Your Conversations</h2>
+
+{% if conversations %}
+<ul class="list-group">
+    {% for user_profile in conversations %}
+    <li class="list-group-item">
+        <a href="{% url 'hookup:message_detail' user_profile.user.id %}" class="d-flex justify-content-between">
+            <span>{{ user_profile.user.username }}</span>
+            <span class="badge bg-secondary">Messages</span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-center">You have no conversations yet. Start connecting with others!</p>
+{% endif %}
+{% endblock %}
+
+<style>
+    .list-group-item {
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        transition: background-color 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: #e9ecef;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        background-color: #007bff;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .list-group {
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,89 @@
+{% extends 'hookup/base1.html' %}
+
+{% block title %}HuKUP {{ other_user.username }}{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Conversation with {{ other_user.username }}</h2>
+
+<div class="message-history">
+    {% for message in conversation %}
+    <div class="message {{ 'sent-message' if message.sender == request.user else 'received-message' }}">
+        <div class="message-header">
+            <strong>{{ message.sender.username }}:</strong>
+            <span class="timestamp">{{ message.timestamp|date:"M d, Y H:i" }}</span>
+        </div>
+        <div class="message-content">{{ message.content }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Message sending form -->
+<form method="post" action="{% url 'hookup:send_message' other_user.id %}" class="message-form">
+    {% csrf_token %}
+    <textarea name="message_content" rows="3" placeholder="Type your message..." class="form-control"></textarea>
+    <button type="submit" class="btn btn-primary mt-2">Send Message (1 Token)</button>
+</form>
+
+<style>
+    .message-history {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        word-wrap: break-word;
+    }
+
+    .sent-message {
+        background-color: #d1e7dd;
+        text-align: right;
+    }
+
+    .received-message {
+        background-color: #f8d7da;
+        text-align: left;
+    }
+
+    .message-header {
+        font-weight: bold;
+    }
+
+    .timestamp {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-left: 10px;
+    }
+
+    .message-content {
+        margin-top: 5px;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .message-form textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'hookup/base1.html' %}
+
+
+{%block title%} HuKUP Winks{%endblock%}
+
+{% block content %}
+<h2>Winks You've Received</h2>
+
+{% if winks %}
+<ul class="list-group">
+    {% for wink in winks %}
+    <li class="list-group-item">
+        <a href="{% url 'hookup:profile_detail' wink.sender.id %}">
+            {{ wink.sender.username }}
+        </a>
+        <small class="text-muted">Sent on {{ wink.timestamp|date:"M d, Y H:i" }}</small>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You haven't received any winks yet.</p>
+{% endif %}
+
+{% endblock %}

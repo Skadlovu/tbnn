@@ -1,0 +1,34 @@
+<p class="greeting">Hello {{ user.username }},</p>
+
+<p class="message">Please verify your email address by clicking the link below:</p>
+
+<a href="{{ verification_link }}" class="verify-link">Verify Email</a>
+
+<style>
+    .greeting {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .message {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .verify-link {
+        display: inline-block;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .verify-link:hover {
+        background-color: #0056b3;
+    }
+</style>

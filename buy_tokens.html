@@ -1,0 +1,114 @@
+{% extends 'hookup/base1.html' %}
+
+{%block title%} HuKUP Tokens{%endblock%}
+
+
+{% block content %}
+<style>
+    .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.package-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.package-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.package-info {
+    font-size: 1.1rem;
+}
+
+.buy-form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #218838;
+}
+
+.gift-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-link {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+</style>
+<div class="container">
+    <h2 class="section-title">Buy Tokens</h2>
+    <ul class="package-list">
+        {% for package in packages %}
+        <li class="package-item">
+            <div class="package-info">
+                <strong>{{ package.name }}</strong> - R{{ package.price }}
+            </div>
+            <form action="{% url 'hookup:buy_tokens' package.id %}" method="POST" class="buy-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Buy {{ package.tokens }} tokens</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2 class="section-title">Uncapped Plan</h2>
+    <p class="uncapped-plan-description">Uncapped plan valid for 30 days: R50</p>
+    <form action="{% url 'hookup:buy_uncapped' %}" method="POST" class="buy-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">Buy Uncapped Plan</button>
+    </form>
+
+    <h2 class="section-title">Gift Someone Tokens</h2>
+    <div class="gift-button-container">
+        <button class="btn btn-link">
+            <a href="{% url 'hookup:gift' %}">Gift Tokens</a>
+        </button>
+    </div>
+</div>
+
+{% endblock %}

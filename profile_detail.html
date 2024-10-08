@@ -1,0 +1,102 @@
+{% extends 'hookup/base1.html' %}
+
+{% block title %}HuKUP Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h2 class="text-center mb-4">{{ profile.user.username }}'s Profile</h2>
+
+    <div class="profile-card">
+        <div class="profile-image">
+            <img src="{{ profile.profile_picture.url }}" alt="{{ profile.user.username }}'s profile picture"
+                class="img-fluid rounded-circle">
+        </div>
+        <div class="profile-info">
+            <p><strong>Age:</strong> {{ profile.age }}</p>
+            <p><strong>Height:</strong> {{ profile.height }} m</p>
+            <p><strong>Body Type:</strong> {{ profile.get_body_type_display }}</p>
+            <p><strong>Hair Color:</strong> {{ profile.get_hair_color_display }}</p>
+            <p><strong>Education:</strong> {{ profile.get_education_display }}</p>
+            <p><strong>Occupation:</strong> {{ profile.occupation }}</p>
+            <p><strong>Bio:</strong> {{ profile.bio }}</p>
+        </div>
+    </div>
+
+    <div class="actions mt-4">
+        <form action="{% url 'hookup:send_wink' user.id %}" method="post" class="d-inline-block mr-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">👋 Send Wink (2 Tokens)</button>
+        </form>
+
+        <form action="{% url 'hookup:send_like' user.id %}" method="post" class="d-inline-block mr-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">👍 Like Profile (1 Token)</button>
+        </form>
+
+        <a href="{% url 'hookup:match_list' %}" class="btn btn-secondary">Back to Matches</a>
+    </div>
+
+    <div class="message-form mt-4">
+        <form action="{% url 'hookup:send_message' user.id %}" method="post">
+            {% csrf_token %}
+            <textarea name="message_content" rows="3" placeholder="Type your message here..."
+                class="form-control"></textarea>
+            <button type="submit" class="btn btn-success mt-2">Send Message (1 Token)</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-image {
+        flex-shrink: 0;
+        margin-right: 20px;
+    }
+
+    .profile-info {
+        flex-grow: 1;
+    }
+
+    .profile-image img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .actions button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .message-form textarea {
+        resize: vertical;
+    }
+
+    .message-form button {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+</style>

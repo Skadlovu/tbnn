@@ -1,0 +1,81 @@
+{% extends 'hookup/base1.html' %}
+
+{% block title %}HuKUP Likes{% endblock %}
+
+{% block content %}
+<div class="container likes-container">
+    <h2 class="section-title">Likes You've Received</h2>
+
+    {% if likes %}
+    <ul class="list-group">
+        {% for like in likes %}
+        <li class="list-group-item like-item">
+            <a href="{% url 'hookup:profile_detail' like.sender.id %}" class="like-sender">
+                {{ like.sender.username }}
+            </a>
+            <small class="text-muted like-timestamp">Liked on {{ like.timestamp|date:"M d, Y H:i" }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-likes-text">You haven't received any likes yet.</p>
+    {% endif %}
+</div>
+
+<style>
+    .likes-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .list-group {
+        padding-left: 0;
+    }
+
+    .like-item {
+        padding: 15px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+
+    .like-item:hover {
+        background-color: #f1f1f1;
+    }
+
+    .like-sender {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .like-sender:hover {
+        text-decoration: underline;
+    }
+
+    .like-timestamp {
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .no-likes-text {
+        font-size: 1.1rem;
+        color: #555;
+        text-align: center;
+    }
+</style>
+{% endblock %}
